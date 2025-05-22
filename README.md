@@ -1,61 +1,74 @@
-# New LangGraph Project
-## Getting Started
+# LangGraph ChatBot – Stateless Tool-Using Agent
 
-1. **Запусти Ollama**, если он ещё не запущен (локальный LLM-сервер):
+A simple LangGraph-powered agent that answers user messages statelessly and calls a tool `get_current_time()` when the user asks about the current UTC time.
+
+---
+
+## 🔧 How to Run It
+
+```bash
+git clone <repo>
+cd your_repo
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+---
+
+## ⚙️ Requirements
+
+- Python 3.9+
+- [Ollama](https://ollama.com) installed locally with model `phi` pulled.
+
+---
+
+## 🚀 Ollama Setup (Required)
+
+1. **Start the Ollama server** (runs on `localhost:11434` by default):
 
 ```bash
 ollama serve
 ```
 
-2. **Загрузи модель `phi`** (можно добавить другую модель):
+2. **Pull the model** used by this agent (e.g. `phi`):
 
 ```bash
 ollama pull phi
 ```
-
-> По умолчанию LangGraph будет подключаться к Ollama на `http://localhost:11434`.
-
-3. **Установи зависимости**, включая [LangGraph CLI](https://langchain-ai.github.io/langgraph/concepts/langgraph_cli/):
-
+3. **Start Project**
 ```bash
-cd path/to/your/app
-pip install -e .
+langgraph dev
+```
+---
+
+## 🛠️ Development Notes
+
+You can customize logic in:
+
+- `model_logic.py`: LLM prompt and tool routing
+- `graph.py`: defines the flow (start → call_model → end)
+
+To test the graph visually, open:
+
+```
+https://smith.langchain.com/studio/?baseUrl=http://127.0.0.1:2024
 ```
 
-4. (Опционально) Создай `.env`, если нужны секреты или токены:
+---
+
+## 🌍 Environment
+
+Optional: copy example environment file and fill in LangSmith API key if needed:
 
 ```bash
 cp .env.example .env
 ```
 
-Если хочешь включить LangSmith для трассировки:
+`.env`:
 
-```text
-# .env
-LANGSMITH_API_KEY=lsv2...
-LANGSMITH_PROJECT=...
+```env
+LANGSMITH_PROJECT=your_project_name
+LANGSMITH_API_KEY=your_langsmith_key
 ```
 
-5. **Запусти LangGraph сервер:**
-
-```bash
-langgraph dev
-```
-
-Теперь сервер будет доступен по адресу:
-
-- 🧠 UI: [http://127.0.0.1:2024](http://127.0.0.1:2024)
-- 📚 API Docs: [http://127.0.0.1:2024/docs](http://127.0.0.1:2024/docs)
-- 🎨 Studio: https://smith.langchain.com/studio/?baseUrl=http://127.0.0.1:2024
-
 ---
-
-## How to customize
-
-1. **Настрой параметры**: измени `Configuration` в `graph.py`, если нужно указать системный prompt или другую модель.
-
-2. **Расширь граф**: логика работы графа — в [graph.py](./src/agent/graph.py). Добавляй новые узлы, ветвления и кастомную обработку.
-
----
-
-
