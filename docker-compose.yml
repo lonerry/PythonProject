@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  ollama:
+    image: ollama/ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    command: serve
+
+  langgraph:
+    build: .
+    ports:
+      - "2024:2024"
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+    depends_on:
+      - ollama
+    volumes:
+      - .:/app
+    command: bash -c "ollama pull phi && langgraph dev"
+
+volumes:
+  ollama_data:
