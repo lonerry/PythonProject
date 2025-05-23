@@ -5,3 +5,4 @@ ruff>=0.8.2
 pytest>=8.3.5
 anyio>=4.7.0
 langgraph-cli[inmem]>=0.2.8
+langchain-community>=0.0.29
